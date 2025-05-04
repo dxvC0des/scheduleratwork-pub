@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Portal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.payment-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#payment-status {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#payment-status.hidden {
+    display: none;
+}
+
+#payment-status.success {
+    color: #28a745;
+}
+
+#payment-status.failure {
+    color: #dc3545;
+}
+
+#loading-spinner {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#loading-spinner.hidden {
+    display: none;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #28a745;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Portal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Payment Portal</h2>
+        <form id="payment-form">
+            <div class="input-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="input-group">
+                <label for="card-number">Card Number:</label>
+                <input type="text" id="card-number" required>
+            </div>
+            <div class="input-group">
+                <label for="expiry-date">Expiry Date:</label>
+                <input type="text" id="expiry-date" placeholder="MM/YY" required>
+            </div>
+            <div class="input-group">
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" required>
+            </div>
+            <div class="input-group">
+                <button type="submit" id="submit-btn">Pay Now</button>
+            </div>
+        </form>
+        <div id="payment-status" class="hidden">
+            <p id="status-message"></p>
+        </div>
+        <div id="loading-spinner" class="hidden">
+            <div class="spinner"></div>
+            <p>Processing payment...</p>
+        </div>
+    </div>
+
+</body>
+<script>
+document.getElementById('payment-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Get the values from the form inputs
+    const name = document.getElementById('name').value;
+    const cardNumber = document.getElementById('card-number').value;
+    const expiryDate = document.getElementById('expiry-date').value;
+    const cvv = document.getElementById('cvv').value;
+
+    // Show the loading spinner and hide the form
+    document.getElementById('loading-spinner').classList.remove('hidden');
+    document.getElementById('payment-form').classList.add('hidden');
+
+    // Simulate a fake payment process with a delay
+    setTimeout(() => {
+        // Check if the inputs are valid (for simplicity, just check if they are not empty)
+        if (name && cardNumber && expiryDate && cvv) {
+            showPaymentStatus(true); // Simulate success
+        } else {
+            showPaymentStatus(false); // Simulate failure
+        }
+    }, 2000); // Simulate a 2-second delay (like a real transaction)
+});
+
+function showPaymentStatus(isSuccessful) {
+    // Hide the loading spinner
+    document.getElementById('loading-spinner').classList.add('hidden');
+    
+    // Show the payment status message
+    const paymentStatus = document.getElementById('payment-status');
+    const statusMessage = document.getElementById('status-message');
+    
+    if (isSuccessful) {
+        paymentStatus.classList.remove('hidden');
+        paymentStatus.classList.add('success');
+        statusMessage.textContent = "Payment Successful! Thank you for your purchase.";
+        
+        // Redirect to a success page after 3 seconds
+        setTimeout(() => {
+            window.location.href = "https://cs50.me"; // Replace with your actual success URL
+        }, 1000); // Redirect after 3 seconds
+    } else {
+        paymentStatus.classList.remove('hidden');
+        paymentStatus.classList.add('failure');
+        statusMessage.textContent = "Payment Failed. Please check your details and try again.";
+        
+        // Redirect to a failure page after 3 seconds
+        setTimeout(() => {
+            window.location.href = "https://github.com/dxvC0des"; // Replace with your actual failure URL
+        }, 1000); // Redirect after 3 seconds
+    }
+    
+    // Optionally, show the form again after the redirect time (if you want the option to retry)
+    setTimeout(() => {
+        document.getElementById('payment-form').classList.remove('hidden');
+    }, 3000);
+}
+
+</script>
+</html>

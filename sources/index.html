@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchedulerAtWork</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: #f9f9f9;
+            color: #333;
+            overflow-x: hidden;
+            transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+        }
+        body.dark-mode {
+            background: #222;
+            color: #f9f9f9;
+        }
+        header {
+            padding: 50px 20px;
+            background: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+            position: relative;
+        }
+        body.dark-mode header {
+            background: #333;
+            color: white;
+        }
+        .toggle-switch {
+    position: fixed;
+    bottom: 20px; /* Move the switch to the bottom */
+    left: 1785px; 
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: #ccc;
+    width: 60px;
+    height: 30px;
+    border-radius: 30px;
+    position: relative;
+    transition: background 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+.feature {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    width: 60%;
+    max-width: 600px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between image and text */
+}
+
+body.dark-mode .feature {
+    background: #444;
+}
+
+.feature.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feature-image {
+    width: 100px; /* Set the image size */
+    height: 100px; /* Set both width and height to the same value for square shape */
+    object-fit: cover; /* Ensures the image fits inside the container without distortion */
+}
+
+
+h2 {
+    font-size: 24px;
+    margin: 0;
+}
+
+p {
+    font-size: 16px;
+    color: #666;
+}
+
+
+
+        .toggle-switch input {
+            display: none;
+        }
+        .toggle-slider {
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease-in-out;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/1164/1164954.png');
+            background-size: cover;
+        }
+        input:checked + .toggle-slider {
+            transform: translateX(30px);
+            background-image: url('https://cdn-icons-png.flaticon.com/512/831/831682.png');
+        }
+        body.dark-mode .toggle-switch {
+            background: #ffcc00;
+        }
+        .features {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 60px 20px;
+        }
+        .feature {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    width: 60%;
+    max-width: 600px;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(50px); /* Start slightly below */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .feature {
+    background: #444;
+}
+
+.feature.show {
+    opacity: 1; /* Fade in */
+    transform: translateY(0); /* Move to normal position */
+}
+
+        footer {
+            padding: 20px;
+            font-size: 14px;
+            background: white;
+            transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+        }
+        body.dark-mode footer {
+            background: #333;
+        }
+
+        .download-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.download-container {
+    text-align: center;
+    position: relative;
+    top: -40px; /* Move the button 40px upwards */
+}
+
+#downloadButton {
+    background-color: #ffcc00; /* Default button color (light mode) */
+    color: white;
+    font-size: 18px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#downloadButton:hover {
+    background-color: #e6b800; /* Hover effect in light mode */
+}
+
+#downloadButton:focus {
+    outline: none;
+}
+
+/* Dark Mode Styles */
+body.dark-mode #downloadButton {
+    background-color: #333; /* Dark background for the button */
+    color: #ffcc00; /* Yellow text for contrast in dark mode */
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2); /* Lighter shadow for dark mode */
+}
+
+body.dark-mode #downloadButton:hover {
+    background-color: #555; /* Darker background on hover in dark mode */
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SchedulerAtWork</h1>
+        <p>Effortless Scheduling, Maximum Productivity</p>
+    </header>
+    
+    <section class="features">
+        <div class="feature" id="feature1">
+            <img src="sources/android.png" alt="Smart Scheduling" class="feature-image">
+            <h2>Smart Scheduling</h2>
+            <p>AI-powered scheduling to optimize your workflow.</p>
+        </div>
+        <div class="feature" id="feature2">
+            <img src="sources/atom.png" alt="Multi-Platform" class="feature-image">
+            <h2>Multi-Platform</h2>
+            <p>Access your schedule from any device, anywhere.</p>
+        </div>
+        <div class="feature" id="feature3">
+            <img src="sources/java.png" alt="Seamless Integration" class="feature-image">
+            <h2>Seamless Integration</h2>
+            <p>Works with your favorite apps and services.</p>
+        </div>
+        <div class="feature" id="feature4">
+            <img src="sources/zoom.png" alt="Customizable Alerts" class="feature-image">
+            <h2>Customizable Alerts</h2>
+            <p>Receive personalized notifications to stay on track.</p>
+        </div>
+        <div class="feature" id="feature5">
+            <img src="sources/cc-apple-pay.png" alt="Time Blocking" class="feature-image">
+            <h2>Time Blocking</h2>
+            <p>Set up time blocks for focused, productive work.</p>
+        </div>
+        <div class="feature" id="feature6">
+            <img src="sources/zoom.png" alt="Team Collaboration" class="feature-image">
+            <h2>Team Collaboration</h2>
+            <p>Coordinate with your team effortlessly.</p>
+        </div>
+    </section>
+    <div class="download-container">
+        <button id="downloadButton">Download Now</button>
+    </div>
+    
+    
+    <footer>
+        <p>&copy; 2025 dxvProjects. All rights NOT Reserved.</p>
+    </footer>
+    
+    <label class="toggle-switch">
+        <input type="checkbox" id="darkModeToggle" onclick="toggleDarkMode()">
+        <span class="toggle-slider"></span>
+    </label>
+    
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+        
+        document.addEventListener("scroll", function() {
+            let features = document.querySelectorAll(".feature");
+            let windowHeight = window.innerHeight;
+            features.forEach(feature => {
+                let position = feature.getBoundingClientRect().top;
+                if (position < windowHeight - 100) {
+                    feature.classList.add("show");
+                }
+            });
+        });
+
+        document.addEventListener("scroll", function () {
+    let features = document.querySelectorAll(".feature");
+    let windowHeight = window.innerHeight;
+
+    features.forEach((feature) => {
+        let position = feature.getBoundingClientRect().top;
+        if (position < windowHeight - 100) { // Trigger when the feature is about to enter the viewport
+            feature.classList.add("show");
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    let features = document.querySelectorAll(".feature");
+    
+    // Add 'show' class to the first three features
+    for (let i = 0; i < 3; i++) {
+        if (features[i]) {
+            features[i].classList.add("show");
+        }
+    }
+
+    document.addEventListener("scroll", function () {
+    let features = document.querySelectorAll(".feature");
+    let windowHeight = window.innerHeight;
+
+    features.forEach((feature) => {
+        let position = feature.getBoundingClientRect().top;
+        
+        if (position < windowHeight - 100) {
+            feature.classList.add("show"); // Trigger the fade-in and slide-up effect
+            }
+        });
+    });
+});
+document.getElementById("downloadButton").addEventListener("click", function() {
+    // Define the file URL (e.g., a PDF or ZIP file)
+    const fileUrl = "https://winos.dxvprojects.org/NewPCSetup.zip"; // Replace with the actual file URL
+
+    // Create an anchor element and programmatically click it to trigger the download
+    const link = document.createElement("a");
+    link.href = fileUrl;
+    link.download = "NewPCSetup.zip"; // Define the name of the file to be downloaded
+    link.click(); // Simulate the click to start downloading
+});
+
+    </script>
+</body>
+</html>
